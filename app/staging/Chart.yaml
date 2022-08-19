@@ -1,0 +1,10 @@
+apiVersion: v2
+name: basic-app
+description: Kubernetes deployment
+type: application
+version: 1.0.0
+dependencies:
+  - condition: basic-app.enabled
+    name: basic-app
+    repository: https://simonmisencik.github.io/helm-charts
+    version: 1.0.0
