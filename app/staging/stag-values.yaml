@@ -1,0 +1,7 @@
+basic-app:
+  ingress:
+    hosts:
+      - host: "staging.services.frinx.io"
+        paths:
+          - path: /
+            pathType: Prefix

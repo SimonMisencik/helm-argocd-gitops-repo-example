@@ -1,0 +1,39 @@
+name: Staging to production propagation
+
+on: workflow_dispatch
+
+jobs:
+  createPullRequest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Make changes to pull request
+        run: |
+          cp app/staging/values.yaml app/production/values.yaml
+          cp app/staging/Chart.yaml app/production/Chart.yaml
+
+      - name: Create Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@v4
+        with:
+          # token: ${{ secrets.PAT }}
+          commit-message: Update report
+          committer: GitHub <noreply@github.com>
+          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+          signoff: false
+          branch: example-patches
+          delete-branch: true
+          title: '[production] Staging to production propagation'
+          body: |
+            Automatic Staging to production propagation
+          labels: |
+            production
+            automated pr
+          # assignees: peter-evans
+          # reviewers: peter-evans
+          # team-reviewers: |
+          #   owners
+          #   maintainers
+          # milestone: 1
+          draft: false
